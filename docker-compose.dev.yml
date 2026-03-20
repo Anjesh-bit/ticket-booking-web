@@ -1,0 +1,40 @@
+version: "3.8"
+
+# Usage: npm run docker:dev
+# OR:    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  app:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./server/.env.development
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    env_file:
+      - ./client/.env.development
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  postgres:
+    ports:
+      - "5432:5432" # expose for TablePlus / psql locally
