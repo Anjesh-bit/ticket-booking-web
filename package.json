@@ -1,0 +1,47 @@
+{
+  "name": "ticket-booking",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "dev": "concurrently --kill-others-on-fail --prefix-colors \"bgBlue.bold,bgMagenta.bold\" --names \"SERVER,CLIENT\" \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
+    "dev:server": "npm run dev --workspace=server",
+    "dev:client": "npm run dev --workspace=client",
+    "build": "npm run build --workspace=server && npm run build --workspace=client",
+    "build:server": "npm run build --workspace=server",
+    "build:client": "npm run build --workspace=client",
+    "lint": "npm run lint --workspace=server && npm run lint --workspace=client",
+    "lint:fix": "npm run lint:fix --workspace=server && npm run lint:fix --workspace=client",
+    "format": "npm run format --workspace=server && npm run format --workspace=client",
+    "type-check": "npm run type-check --workspace=server && npx tsc -b --noEmit --prefix client",
+    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "docker:dev:build": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
+    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
+    "docker:prod:build": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build",
+    "docker:down": "docker-compose down",
+    "docker:clean": "docker-compose down -v --remove-orphans"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "@commitlint/types": "^19.0.0",
+    "@tsconfig/node22": "^22.0.0",
+    "concurrently": "^8.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "tsx": "^4.0.0"
+  },
+  "lint-staged": {
+    "server/**/*.{ts,js}": [
+      "npm run lint:fix --workspace=server",
+      "npm run type-check --workspace=server"
+    ],
+    "client/**/*.{ts,tsx,js,jsx}": [
+      "npm run lint:fix --workspace=client",
+      "npm run format:check --workspace=client"
+    ]
+  }
+}
