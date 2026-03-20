@@ -25,3 +25,11 @@ dist-ssr
 # Storage
 server/src/storage/*
 !server/src/storage/.gitkeep
+
+
+server/src/env/
+client/src/env/
+
+
+!server/src/env/.env.example
+!client/src/env/.env.example
