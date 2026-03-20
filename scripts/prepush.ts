@@ -1,14 +1,13 @@
 import { execSync } from "child_process";
 
 import { validateBranchName } from "./validateBranch.js";
-import logger from "../server/src/lib/helpers/winston.helpers.js";
 
 try {
   const branchName: string = execSync("git rev-parse --abbrev-ref HEAD").toString().trim();
   const isValidBranch: boolean = validateBranchName(branchName);
 
   if (!isValidBranch) {
-    logger.error(
+    console.error(
       `🚫 Invalid branch name: "${branchName}"\n` +
         "Branch name must follow this pattern: <type>/<short-description>\n" +
         "Allowed types: feat, fix, chore, docs, release, perf, hotfix, refactor, test, experiment\n" +
@@ -20,8 +19,8 @@ try {
     process.exit(1);
   }
 
-  logger.log("info", `✅ Branch name "${branchName}" is valid.`);
+  console.log(`✅ Branch name "${branchName}" is valid.`);
 } catch (err) {
-  logger.error("Error validating branch name:", err);
+  console.error(`Error validating branch name: ${(err as Error).message}`);
   process.exit(1);
 }
