@@ -1,5 +1,5 @@
-import { Pool } from "../../node_modules/@types/pg/index.js";
-import type { PoolClient, QueryResult } from "../../node_modules/@types/pg/index.js";
+import type { PoolClient, QueryResult } from "pg";
+import { Pool } from "pg";
 
 import { ENV } from "#config/env.config";
 import logger from "#lib/helpers/winston.helpers.js";
