@@ -1,20 +1,17 @@
-version: "3.8"
-
-# Usage: npm run docker:prod
-# OR:    docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-
 services:
   app:
     build:
-      context: ./server
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: server/Dockerfile
       target: production
     ports:
-      - "3000:3000"
+      - "5000:5000"
     env_file:
       - ./server/.env.production
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     restart: always
     deploy:
@@ -25,8 +22,8 @@ services:
 
   client:
     build:
-      context: ./client
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: client/Dockerfile
       target: production
     ports:
       - "80:80"
@@ -41,9 +38,25 @@ services:
 
   postgres:
     restart: always
-
     deploy:
       resources:
         limits:
           cpus: "1"
           memory: 1G
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M

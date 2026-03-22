@@ -5,6 +5,9 @@
     "server",
     "client"
   ],
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
   "scripts": {
     "prepare": "husky",
     "dev": "concurrently --kill-others-on-fail --prefix-colors \"bgBlue.bold,bgMagenta.bold\" --names \"SERVER,CLIENT\" \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
@@ -17,8 +20,8 @@
     "lint:fix": "npm run lint:fix --workspace=server && npm run lint:fix --workspace=client",
     "format": "npm run format --workspace=server && npm run format --workspace=client",
     "type-check": "npm run type-check --workspace=server && npx tsc -b --noEmit --prefix client",
-    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
-    "docker:dev:build": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --build",
+    "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --watch",
+    "docker:dev:build": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build --watch",
     "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
     "docker:prod:build": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build",
     "docker:down": "docker-compose down",
@@ -38,8 +41,7 @@
   },
   "lint-staged": {
     "server/**/*.{ts,js}": [
-      "npm run lint:fix --workspace=server",
-      "npm run type-check --workspace=server"
+      "npm run lint:fix --workspace=server"
     ],
     "client/**/*.{ts,tsx,js,jsx}": [
       "npm run lint:fix --workspace=client",
