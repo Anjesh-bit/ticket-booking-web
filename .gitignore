@@ -27,9 +27,10 @@ server/src/storage/*
 !server/src/storage/.gitkeep
 
 
-server/env/*
-client/env/*
+server/.env*
+client/.env*
+.env*
+!.env.example
 
-
-!server/src/env/.env.example
-!client/src/env/.env.example
+!server/.env.example
+!client/.env.example

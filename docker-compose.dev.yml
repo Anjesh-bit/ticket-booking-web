@@ -1,40 +1,65 @@
-version: "3.8"
-
-# Usage: npm run docker:dev
-# OR:    docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
-
 services:
   app:
     build:
-      context: ./server
-      dockerfile: Dockerfile.dev
+      context: .
+      dockerfile: server/Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "5000:5000"
     env_file:
       - ./server/.env.development
-    volumes:
-      - ./server:/app
-      - /app/node_modules
     depends_on:
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ./server/src
+          target: /app/server/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./server/package.json
 
   client:
     build:
-      context: ./client
-      dockerfile: Dockerfile.dev
+      context: .
+      dockerfile: client/Dockerfile.dev
     ports:
-      - "5173:5173"
+      - "3000:3000"
     env_file:
       - ./client/.env.development
-    volumes:
-      - ./client:/app
-      - /app/node_modules
     depends_on:
       - app
     restart: unless-stopped
+    develop:
+      watch:
+        - action: sync
+          path: ./client/src
+          target: /app/client/src
+          ignore:
+            - node_modules/
+        - action: sync
+          path: ./client/index.html
+          target: /app/client/index.html
+        - action: rebuild
+          path: ./client/package.json
 
   postgres:
     ports:
-      - "5432:5432" # expose for TablePlus / psql locally
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
