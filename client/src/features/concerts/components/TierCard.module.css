@@ -1,0 +1,67 @@
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+.card:hover:not(.sold) {
+  border-color: #2563eb;
+}
+
+.sold {
+  opacity: 0.5;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.seats {
+  font-size: 0.82rem;
+  color: #64748b;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.btn {
+  padding: 0.4rem 1rem;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btn:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
