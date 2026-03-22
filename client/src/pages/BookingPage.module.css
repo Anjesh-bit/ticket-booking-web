@@ -1,0 +1,64 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.back {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  margin-bottom: 1.2rem;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.3rem;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0 0 2rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.sub {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #475569;
+  margin: 0 0 0.6rem;
+}
+
+.error {
+  text-align: center;
+  color: #ef4444;
+  margin-top: 2rem;
+}
