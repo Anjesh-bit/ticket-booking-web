@@ -17,13 +17,15 @@ const maskSensitiveData = winston.format((info) => {
   return info;
 });
 
+const fileFormat = winston.format.combine(
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+  winston.format.json(),
+);
+
 const combinedFileTransport = new winston.transports.DailyRotateFile({
   datePattern: WINSTON_LOG_DATE_PATTERN,
   filename: "src/storage/logs/combined-%DATE%.log",
-  format: winston.format.combine(
-    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-    winston.format.json(),
-  ),
+  format: fileFormat,
   handleExceptions: true,
   handleRejections: true,
   level: "info",
@@ -35,10 +37,7 @@ const combinedFileTransport = new winston.transports.DailyRotateFile({
 const errorFileTransport = new winston.transports.DailyRotateFile({
   datePattern: WINSTON_LOG_DATE_PATTERN,
   filename: "src/storage/logs/error-%DATE%.log",
-  format: winston.format.combine(
-    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-    winston.format.json(),
-  ),
+  format: fileFormat,
   handleExceptions: true,
   handleRejections: true,
   level: "error",
@@ -46,6 +45,15 @@ const errorFileTransport = new winston.transports.DailyRotateFile({
   maxSize: WINSTON_MAX_LOG_FILE_SIZE,
   zippedArchive: true,
 });
+
+const consoleFormat = winston.format.combine(
+  winston.format.colorize(),
+  winston.format.printf((info) => {
+    const { timestamp, level, message, ...meta } = info;
+    const metaStr = Object.keys(meta).length ? `\n${JSON.stringify(meta, null, 2)}` : "";
+    return `${String(timestamp)} ${level}: ${String(message)}${metaStr}`;
+  }),
+);
 
 const logger = winston.createLogger({
   exitOnError: false,
@@ -57,10 +65,7 @@ const logger = winston.createLogger({
   levels: WINSTON_LOG_LEVELS,
   transports: [
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`),
-      ),
+      format: consoleFormat,
       handleExceptions: true,
       handleRejections: true,
     }),

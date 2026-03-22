@@ -1,14 +1,16 @@
-import type { RedisClientType } from "redis";
+import type { createClient } from "redis";
 import redis from "redis";
 
 import { REDIS_CONFIG } from "#config/redis.config.js";
 import logger from "#lib/helpers/winston.helpers.js";
 
+type RedisClient = ReturnType<typeof createClient>;
+
 class RedisConnection {
-  client: null | RedisClientType;
+  client: null | RedisClient;
   isConnected: boolean;
-  publisher: null | RedisClientType;
-  subscriber: null | RedisClientType;
+  publisher: null | RedisClient;
+  subscriber: null | RedisClient;
 
   constructor() {
     this.client = null;
@@ -21,17 +23,9 @@ class RedisConnection {
     try {
       this.client = redis.createClient(REDIS_CONFIG);
 
-      this.publisher = redis.createClient(REDIS_CONFIG);
-
-      this.subscriber = redis.createClient(REDIS_CONFIG);
-
       this.setupEventHandlers();
 
-      await Promise.all([
-        this.client.connect(),
-        this.publisher.connect(),
-        this.subscriber.connect(),
-      ]);
+      await this.client.connect();
 
       this.isConnected = true;
       logger.info("Redis connected successfully");
@@ -45,15 +39,7 @@ class RedisConnection {
 
   async disconnect() {
     try {
-      if (this.client) {
-        await this.client.quit();
-      }
-      if (this.publisher) {
-        await this.publisher.quit();
-      }
-      if (this.subscriber) {
-        await this.subscriber.quit();
-      }
+      if (this.client) await this.client.quit();
 
       this.isConnected = false;
       logger.info("Redis disconnected successfully");
@@ -67,20 +53,6 @@ class RedisConnection {
       throw new Error("Redis client is not connected");
     }
     return this.client;
-  }
-
-  getPublisher() {
-    if (!this.isConnected) {
-      throw new Error("Redis publisher is not connected");
-    }
-    return this.publisher;
-  }
-
-  getSubscriber() {
-    if (!this.isConnected) {
-      throw new Error("Redis subscriber is not connected");
-    }
-    return this.subscriber;
   }
 
   async healthCheck() {
@@ -114,18 +86,6 @@ class RedisConnection {
       this.client.on("ready", () => {
         logger.info("Redis Client Ready");
         this.isConnected = true;
-      });
-    }
-
-    if (this.publisher) {
-      this.publisher.on("error", (err: Error) => {
-        logger.error("Redis Publisher Error:", err);
-      });
-    }
-
-    if (this.subscriber) {
-      this.subscriber.on("error", (err: Error) => {
-        logger.error("Redis Subscriber Error:", err);
       });
     }
   }
