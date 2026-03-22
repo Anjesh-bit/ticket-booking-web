@@ -11,13 +11,13 @@ export interface AuthenticatedRequest extends Request {
   user?: User;
 }
 
-export interface ClassifiedError {
+export type ClassifiedError = {
   message: string | string[];
   statusCode: number;
   type: ErrorType;
-}
+};
 
-export interface ErrorContext {
+export type ErrorContext = {
   error: {
     message: string;
     name: string;
@@ -35,9 +35,9 @@ export interface ErrorContext {
     userId: string;
   };
   timestamp: string;
-}
+};
 
-export interface ErrorResponse {
+export type ErrorResponse = {
   error: {
     details?: unknown;
     field?: string;
@@ -50,7 +50,7 @@ export interface ErrorResponse {
     type: ErrorType;
   };
   success: false;
-}
+};
 
 export type ErrorType =
   | "application"
@@ -61,12 +61,12 @@ export type ErrorType =
   | "validation"
   | "cast";
 
-export interface FormattedErrorResponse {
+export type FormattedErrorResponse = {
   response: ErrorResponse;
   statusCode: number;
-}
+};
 
-export interface User {
+export type User = {
   [key: string]: unknown;
   id: string;
-}
+};
