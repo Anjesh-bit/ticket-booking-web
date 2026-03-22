@@ -1,0 +1,24 @@
+.app {
+  min-height: 100vh;
+  background: #f8fafc;
+  font-family: system-ui, sans-serif;
+}
+
+.header {
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 1.5rem;
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.main {
+  padding: 1rem 0;
+}
