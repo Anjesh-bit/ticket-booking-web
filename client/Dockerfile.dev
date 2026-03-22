@@ -1,15 +1,18 @@
-FROM node:20-alpine AS development
+FROM node:20-alpine
 
 WORKDIR /app
 
 COPY package*.json ./
+COPY client/package*.json ./client/
 
 ENV HUSKY=0
 RUN npm pkg delete scripts.prepare
 RUN npm ci
 
-COPY . .
+COPY client/ ./client/
 
-EXPOSE 5173
+WORKDIR /app/client
+
+EXPOSE 3000
 
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
