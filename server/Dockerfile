@@ -1,18 +1,21 @@
-# ─── Stage 1: Build ───────────────────────────────────────────────────────────
+#Build 
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 COPY package*.json ./
+COPY server/package*.json ./server/
 
 ENV HUSKY=0
 RUN npm pkg delete scripts.prepare
 RUN npm ci
 
-COPY . .
+COPY server/ ./server/
+
+WORKDIR /app/server
 RUN npm run build
 
-# ─── Stage 2: Production ──────────────────────────────────────────────────────
+#Production 
 FROM node:20-alpine AS production
 
 WORKDIR /app
@@ -20,15 +23,16 @@ WORKDIR /app
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 COPY package*.json ./
+COPY server/package*.json ./server/
 
 ENV HUSKY=0
 RUN npm pkg delete scripts.prepare
 RUN npm ci --omit=dev && npm cache clean --force
 
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server/dist ./server/dist
 
 USER appuser
 
-EXPOSE 3000
+EXPOSE 5000
 
-CMD ["node", "dist/server.js"]
+CMD ["node", "server/dist/server.js"]

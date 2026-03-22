@@ -6,30 +6,25 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
-    "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
-    "format:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
+    "axios": "^1.13.6",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint",
-      "prettier --check"
-    ],
-    "*.{json,yml,yaml,md}": [
-      "prettier --check"
-    ]
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.13.1",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.44.1",
     "@typescript-eslint/parser": "^8.44.1",
     "@vitejs/plugin-react": "^5.0.3",
