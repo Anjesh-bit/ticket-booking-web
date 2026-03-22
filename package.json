@@ -22,10 +22,10 @@
     "type-check": "npm run type-check --workspace=server && npx tsc -b --noEmit --prefix client",
     "docker:dev": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --watch",
     "docker:dev:build": "docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build --watch",
-    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
-    "docker:prod:build": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build",
-    "docker:down": "docker-compose down",
-    "docker:clean": "docker-compose down -v --remove-orphans"
+    "docker:prod": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d",
+    "docker:prod:build": "docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build",
+    "docker:down": "docker compose down",
+    "docker:clean": "docker compose down -v --remove-orphans"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",
