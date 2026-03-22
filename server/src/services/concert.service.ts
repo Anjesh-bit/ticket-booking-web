@@ -46,4 +46,17 @@ export const concertService = {
     );
     return rows[0] ?? null;
   },
+
+  getAvailability: async (concertId: string): Promise<TicketTier[]> => {
+    const { rows } = await query<TicketTier>(
+      `
+      SELECT id, tier, price, total_seats, available_seats
+      FROM ticket_tiers
+      WHERE concert_id = $1
+      ORDER BY price DESC
+    `,
+      [concertId],
+    );
+    return rows;
+  },
 };
