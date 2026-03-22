@@ -1,7 +1,6 @@
 import type { NextFunction, RequestHandler, Response } from "express";
 
-import { NotFoundError } from "#services/error.services.js";
-
+import { NotFoundError } from "#services/error.service";
 import type { AsyncRequestHandler, AuthenticatedRequest } from "#types/error.types.js";
 import { createErrorResponse, logError } from "#utils/error.utils.js";
 
