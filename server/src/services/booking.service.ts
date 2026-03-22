@@ -78,7 +78,7 @@ export const bookingService = {
             At 50K concurrent users short TTL is actually safer because invalidating cache on 
             every booking causes cache stampede (everyone rushes to refill the cache at once).
         */
-        await cacheStrategy.delete(`concert:${tier.concert_id}`);
+        await cacheStrategy.delete(`availability:${tier.concert_id}`);
       }
 
       const totalPrice = Number(tier.price) * data.quantity;
