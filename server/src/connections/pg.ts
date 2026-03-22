@@ -35,6 +35,13 @@ export const query = <T extends Record<string, unknown> = Record<string, unknown
   params?: unknown[],
 ): Promise<QueryResult<T>> => pool.query<T>(sql, params);
 
+/* 
+   Wraps a callback in a Postgres transaction.
+   BEGIN → callback → COMMIT on success, ROLLBACK on error.
+   Uses a dedicated client from the pool — required for SELECT FOR UPDATE
+   since locks must stay on the same connection for the duration.
+   
+ */
 export const withTransaction = async <T>(
   callback: (client: PoolClient) => Promise<T>,
 ): Promise<T> => {
