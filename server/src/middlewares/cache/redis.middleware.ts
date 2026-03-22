@@ -44,6 +44,7 @@ const cache = (options: CacheOptions = {}) => {
       logger.debug(`Cache miss: ${cacheKey}`);
     } catch (error) {
       logger.error("Cache read error, bypassing cache:", error);
+
       return next();
     }
 

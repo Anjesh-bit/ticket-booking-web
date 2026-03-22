@@ -1,17 +1,12 @@
 {
-  "name": "real-estate-portal-web",
+  "name": "ticket-booking-server",
   "version": "1.0.0",
-  "description": "",
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development dotenv -e .env.development -- tsx --watch src/server.ts",
-    "dev:staging": "cross-env NODE_ENV=staging dotenv -e .env.staging -- tsx --watch src/server.ts",
-    "dev:prod": "cross-env NODE_ENV=production dotenv -e .env.production -- tsx --watch src/server.ts",
     "build": "tsc && tsc-alias",
     "start": "cross-env NODE_ENV=development dotenv -e .env.development -- node dist/server.js",
-    "start:staging": "cross-env NODE_ENV=staging dotenv -e .env.staging -- node dist/server.js",
-    "start:prod": "cross-env NODE_ENV=production dotenv -e .env.production -- node dist/server.js",
     "type-check": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
@@ -19,55 +14,34 @@
     "format:check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
   "imports": {
     "#*": "./src/*.js"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint",
-      "prettier --check"
-    ],
-    "*.{json,yml,yaml,md}": [
-      "prettier --check"
-    ]
-  },
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.20.0",
     "pg": "^8.20.0",
     "redis": "^5.8.2",
-    "socket.io": "^4.8.3",
     "winston": "^3.17.0",
     "winston-daily-rotate-file": "^5.0.0",
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.37.0",
     "@tsconfig/node22": "^22.0.2",
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.5.2",
     "@types/pg": "^8.18.0",
-    "@types/redis": "^4.0.10",
-    "@typescript-eslint/eslint-plugin": "^8.46.1",
-    "@typescript-eslint/parser": "^8.46.1",
     "cross-env": "^10.1.0",
     "dotenv-cli": "^10.0.0",
     "eslint": "^9.37.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-perfectionist": "^4.15.1",
     "eslint-plugin-prettier": "^5.5.4",
     "prettier": "^3.6.2",
-    "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
