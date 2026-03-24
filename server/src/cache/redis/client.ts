@@ -1,10 +1,8 @@
-import type { RedisClientType } from "redis";
-
 import { redisConnection } from "#connections/redis.js";
 import logger from "#lib/helpers/winston.helpers.js";
 
 class RedisClient {
-  private client: RedisClientType | null;
+  private client: ReturnType<typeof redisConnection.getClient> | null;
   private readonly defaultTTL: number;
 
   constructor() {
@@ -12,7 +10,7 @@ class RedisClient {
     this.defaultTTL = 3600;
   }
 
-  private getClient(): RedisClientType {
+  private getClient() {
     if (!this.client) throw new Error("Redis client not initialized");
     return this.client;
   }
