@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "ignoreDeprecations": "6.0",
     "paths": {
       "@features/*": ["src/features/*"],
       "@shared/*": ["src/shared/*"],
@@ -10,6 +9,6 @@
     }
   },
   "files": [],
-  "include": ["src", "vite-env.d.ts"],
+  "include": [],
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }
