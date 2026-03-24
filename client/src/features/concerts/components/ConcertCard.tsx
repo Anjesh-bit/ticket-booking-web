@@ -15,6 +15,8 @@ export const ConcertCard = ({ concert }: ConcertCardProps) => {
     day: "numeric",
   });
 
+  console.log(date);
+
   return (
     <div className={styles.card} onClick={() => navigate(`/concerts/${concert.id}`)}>
       <div className={styles.header}>
@@ -23,7 +25,7 @@ export const ConcertCard = ({ concert }: ConcertCardProps) => {
       </div>
       <div className={styles.footer}>
         <span className={styles.date}>{date}</span>
-        <span className={styles.tiers}>{concert.tiers.length} tiers available</span>
+        <span className={styles.tiers}>{concert.tier_count} tiers available</span>
       </div>
     </div>
   );
