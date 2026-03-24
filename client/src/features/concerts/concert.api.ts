@@ -3,7 +3,7 @@ import type { ApiResponse } from "@shared/types/api.types";
 import type { Concert } from "./concert.types";
 
 export const concertApi = {
-  getAll: async (): Promise<Omit<Concert, "tiers">[]> => {
+  getAll: async (): Promise<Concert[]> => {
     const { data } = await apiClient.get<ApiResponse<Concert[]>>("/api/concerts");
     return data.data;
   },

@@ -16,5 +16,5 @@ export type Concert = {
   date: string;
   created_at: string;
   tier_count: number;
-  tiers: TicketTier[];
+  tiers?: TicketTier[];
 };

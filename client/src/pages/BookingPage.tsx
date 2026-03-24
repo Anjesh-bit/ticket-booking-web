@@ -40,7 +40,7 @@ const BookingPage = () => {
       <div className={styles.layout}>
         <div className={styles.tiers}>
           <h2 className={styles.sub}>Select a Tier</h2>
-          {concert.tiers.map((tier) => (
+          {concert.tiers?.map((tier) => (
             <TierCard key={tier.id} tier={tier} onSelect={handleSelect} />
           ))}
         </div>
