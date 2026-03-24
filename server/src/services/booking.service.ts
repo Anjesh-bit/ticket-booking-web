@@ -71,14 +71,14 @@ export const bookingService = {
         );
 
         /*
-            ── Invalidate availability cache
-            After a successful booking, the cached availability for this
+            ── Invalidate concert cache
+            After a successful booking, the cached concert for this
             concert is stale. Delete it so the next request fetches fresh
             data from Postgres instead of returning incorrect seat counts.
             At 50K concurrent users short TTL is actually safer because invalidating cache on 
             every booking causes cache stampede (everyone rushes to refill the cache at once).
         */
-        await cacheStrategy.delete(`availability:${tier.concert_id}`);
+        await cacheStrategy.delete(`concert:${tier.concert_id}`);
       }
 
       const totalPrice = Number(tier.price) * data.quantity;

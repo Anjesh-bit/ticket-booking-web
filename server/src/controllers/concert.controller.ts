@@ -33,17 +33,3 @@ export const getConcertById = async (
     next(error);
   }
 };
-
-export const getAvailability = async (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
-  try {
-    const { id } = req.params as { id: string };
-    const tiers = await concertService.getAvailability(id);
-    res.json({ success: true, data: tiers });
-  } catch (error) {
-    next(error);
-  }
-};

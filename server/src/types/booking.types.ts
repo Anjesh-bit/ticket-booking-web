@@ -18,6 +18,7 @@ export type TicketTier = {
   price: string;
   total_seats: number;
   available_seats: number;
+  tier_count: number;
 };
 
 export type Booking = {
