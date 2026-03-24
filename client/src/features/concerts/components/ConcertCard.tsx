@@ -15,8 +15,6 @@ export const ConcertCard = ({ concert }: ConcertCardProps) => {
     day: "numeric",
   });
 
-  console.log(date);
-
   return (
     <div className={styles.card} onClick={() => navigate(`/concerts/${concert.id}`)}>
       <div className={styles.header}>
